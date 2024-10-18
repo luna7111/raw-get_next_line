@@ -6,7 +6,7 @@
 /*   By: ldel-val <ldel-val@student.42madrid.c     |  |           *           */
 /*                                                 \  '.___.;       +         */
 /*   Created: 2024/10/17 16:40:04 by ldel-val       '._  _.'   .        .     */
-/*   Updated: 2024/10/17 16:51:06 by ldel-val          ``                     */
+/*   Updated: 2024/10/18 19:11:25 by ldel-val          ``                     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const	char *s)
 {
 	size_t	i;
 
+	if (!s || !*s)
+		return (0);
 	i = 0;
 	while (s[i])
 		i++;

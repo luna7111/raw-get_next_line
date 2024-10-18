@@ -6,7 +6,7 @@
 /*   By: ldel-val <ldel-val@student.42madrid.c     |  |           *           */
 /*                                                 \  '.___.;       +         */
 /*   Created: 2024/10/17 16:12:55 by ldel-val       '._  _.'   .        .     */
-/*   Updated: 2024/10/17 19:41:35 by ldel-val          ``                     */
+/*   Updated: 2024/10/18 19:33:50 by ldel-val          ``                     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ char	*ft_strjoin_butcooler(char *dest, char *src, size_t nb)
 	size_t	dest_len;
 	size_t	src_len;
 
-	if (!dest)
-		return (NULL);
 	if (!src || !nb)
 		return (dest);
 	dest_len = ft_strlen(dest);
@@ -38,25 +36,26 @@ size_t	ft_find_lbreak(char *string)
 	size_t	i;
 
 	i = 0;
-	printf("flag9");
 	while (string[i] != '\n' && string[i] != '\0')
 		i++;
-	printf("flag9.1");
 	return (i);
 }
 
 char *get_next_line(int fd)
 {
 	static char	buffer[BUFFER_SIZE];
-	char		*string;
+	char		*string = NULL;
 	
 	if (fd < 0)
 		return (NULL);
-	read(fd, buffer, BUFFER_SIZE);
+	if (ft_find_lbreak(&buffer[ft_find_lbreak(buffer) + 1]))
+		ft_strlcpy(buffer, &buffer[ft_find_lbreak(buffer) + 1], BUFFER_SIZE);
+	else
+		read(fd, buffer, BUFFER_SIZE);
 	while (*buffer)
 	{
-		string = ft_strjoin_butcooler(string, buffer, ft_find_lbreak(buffer));
-		if (buffer[ft_find_lbreak(buffer)] == '\n' || buffer[ft_find_lbreak(buffer)] == '\0')
+		string = ft_strjoin_butcooler(string, buffer, ft_find_lbreak(buffer) + 1);
+		if (buffer[ft_find_lbreak(buffer)] == '\n')
 			return (string);
 		read(fd, buffer, BUFFER_SIZE);
 	}
@@ -68,4 +67,22 @@ int	main(void)
 {
 	int	fd = open("el_quijote.txt", O_RDONLY);
 	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	/*char *dest;
+	char src[] = "world";
+
+	dest = malloc(6);
+	ft_strlcpy(dest, "Hello ", 7);
+	printf("%s", ft_strjoin_butcooler(dest, src, 99));
+	*/
 }

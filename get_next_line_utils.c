@@ -6,7 +6,7 @@
 /*   By: ldel-val <ldel-val@student.42madrid.c     |  |           *           */
 /*                                                 \  '.___.;       +         */
 /*   Created: 2024/10/17 16:40:04 by ldel-val       '._  _.'   .        .     */
-/*   Updated: 2024/10/18 19:11:25 by ldel-val          ``                     */
+/*   Updated: 2024/10/23 13:07:49 by ldel-val          ``                     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,20 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 		*dst++ = *src++;
 	*dst = '\0';
 	return (srclen + dstlen);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	char	*allocated_memory;
+	size_t	i;
+
+	if (size && nmemb > SIZE_MAX / size)
+		return (NULL);
+	i = size * nmemb;
+	allocated_memory = (char *)malloc(nmemb * size);
+	if (!allocated_memory)
+		return (NULL);
+	while (i-- > 0)
+		allocated_memory[i] = '\0';
+	return (allocated_memory);
 }

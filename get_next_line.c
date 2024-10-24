@@ -6,13 +6,13 @@
 /*   By: ldel-val <ldel-val@student.42madrid.c     |  |           *           */
 /*                                                 \  '.___.;       +         */
 /*   Created: 2024/10/17 16:12:55 by ldel-val       '._  _.'   .        .     */
-/*   Updated: 2024/10/18 19:33:50 by ldel-val          ``                     */
+/*   Updated: 2024/10/24 18:14:17 by ldel-val          ``                     */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strjoin_butcooler(char *dest, char *src, size_t nb)
+char	*ft_strnappend(char *dest, char *src, size_t nb)
 {
 	char	*buffer;
 	size_t	dest_len;
@@ -22,7 +22,7 @@ char	*ft_strjoin_butcooler(char *dest, char *src, size_t nb)
 		return (dest);
 	dest_len = ft_strlen(dest);
 	src_len = ft_strlen(src);
-	if	(src_len > nb)
+	if (src_len > nb)
 		src_len = nb;
 	buffer = malloc(sizeof(char) * (dest_len + src_len + 1));
 	ft_strlcpy(buffer, dest, dest_len + 1);
@@ -31,9 +31,9 @@ char	*ft_strjoin_butcooler(char *dest, char *src, size_t nb)
 	return (buffer);
 }
 
-size_t	ft_find_lbreak(char *string)
+long	ft_find_lbreak(char *string)
 {
-	size_t	i;
+	long	i;
 
 	i = 0;
 	while (string[i] != '\n' && string[i] != '\0')
@@ -41,48 +41,57 @@ size_t	ft_find_lbreak(char *string)
 	return (i);
 }
 
-char *get_next_line(int fd)
+ssize_t	ft_read(int fd, char *buffer, size_t count)
 {
-	static char	buffer[BUFFER_SIZE];
-	char		*string = NULL;
-	
-	if (fd < 0)
+	ssize_t	read_bytes;
+
+	read_bytes = read(fd, buffer, count);
+	buffer[read_bytes] = '\0';
+	return (read_bytes);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*buffer;
+	char		*string;
+	ssize_t		read_bytes;
+
+	string = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (ft_find_lbreak(&buffer[ft_find_lbreak(buffer) + 1]))
+	if (!buffer)
+		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	read_bytes = 1;
+	if (buffer[ft_find_lbreak(buffer) + 1])
 		ft_strlcpy(buffer, &buffer[ft_find_lbreak(buffer) + 1], BUFFER_SIZE);
 	else
-		read(fd, buffer, BUFFER_SIZE);
-	while (*buffer)
+		read_bytes = ft_read(fd, buffer, BUFFER_SIZE);
+	while (read_bytes > 0)
 	{
-		string = ft_strjoin_butcooler(string, buffer, ft_find_lbreak(buffer) + 1);
+		string = ft_strnappend(string, buffer, ft_find_lbreak(buffer) + 1);
 		if (buffer[ft_find_lbreak(buffer)] == '\n')
 			return (string);
-		read(fd, buffer, BUFFER_SIZE);
+		read_bytes = ft_read(fd, buffer, BUFFER_SIZE);
 	}
-	return (NULL);
+	if (buffer)
+		free(buffer);
+	buffer = NULL;
+	return (string);
 }
-
-
+/*
 int	main(void)
 {
-	int	fd = open("el_quijote.txt", O_RDONLY);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	/*char *dest;
-	char src[] = "world";
+	int		fd;
+	char	*line;
 
-	dest = malloc(6);
-	ft_strlcpy(dest, "Hello ", 7);
-	printf("%s", ft_strjoin_butcooler(dest, src, 99));
-	*/
-}
+	fd = open("test0.txt", O_RDONLY);
+	line = get_next_line(fd);
+	printf("%s", line);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+		printf("%s", line);
+	}
+	free(line);
+}*/

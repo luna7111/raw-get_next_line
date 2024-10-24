@@ -6,7 +6,7 @@
 /*   By: ldel-val <ldel-val@student.42madrid>      |  |           *           */
 /*                                                 \  '.___.;       +         */
 /*   Created: 2024/10/16 16:11:21 by ldel-val       '._  _.'   .        .     */
-/*   Updated: 2024/10/18 19:23:42 by ldel-val          ``                     */
+/*   Updated: 2024/10/24 17:49:03 by ldel-val          ``                     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 # define GET_NEXT_LINE_H
 
 //read, close
-#include <unistd.h>
+# include <unistd.h>
 //open
-#include <fcntl.h>
+# include <fcntl.h>
 //printf
-#include <stdio.h>
+# include <stdio.h>
 //malloc and free
-#include <stdlib.h>
+# include <stdlib.h>
+//SIZE_MAX
+# include <stdint.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100
@@ -28,10 +30,12 @@
 
 char	*get_next_line(int fd);
 
-char	*ft_strjoin_butcooler(char *dest, char *src, size_t nb);
-size_t	ft_find_lbreak(char *string);
+char	*ft_strnappend(char *dest, char *src, size_t nb);
+long	ft_find_lbreak(char *string);
 
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_memset(void *s, int c, size_t n);
 #endif

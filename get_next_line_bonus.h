@@ -6,12 +6,12 @@
 /*   By: ldel-val <ldel-val@student.42madrid>      |  |           *           */
 /*                                                 \  '.___.;       +         */
 /*   Created: 2024/10/16 16:11:21 by ldel-val       '._  _.'   .        .     */
-/*   Updated: 2024/10/24 17:49:03 by ldel-val          ``                     */
+/*   Updated: 2024/10/29 01:30:10 by ldel-val          ``                     */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 //read, close
 # include <unistd.h>

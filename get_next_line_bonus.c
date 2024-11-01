@@ -6,7 +6,7 @@
 /*   By: ldel-val <ldel-val@student.42madrid.c     |  |           *           */
 /*                                                 \  '.___.;       +         */
 /*   Created: 2024/10/17 16:12:55 by ldel-val       '._  _.'   .        .     */
-/*   Updated: 2024/10/29 01:07:54 by ldel-val          ``                     */
+/*   Updated: 2024/11/01 15:15:14 by ldel-val          ``                     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ ssize_t	ft_read(int fd, char *buffer, size_t count)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer[1024];
+	static char	*buffer[MAX_FD];
 	char		*string;
 	ssize_t		read_bytes;
 

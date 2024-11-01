@@ -6,7 +6,7 @@
 /*   By: ldel-val <ldel-val@student.42madrid>      |  |           *           */
 /*                                                 \  '.___.;       +         */
 /*   Created: 2024/10/16 16:11:21 by ldel-val       '._  _.'   .        .     */
-/*   Updated: 2024/10/29 01:30:10 by ldel-val          ``                     */
+/*   Updated: 2024/11/01 15:14:36 by ldel-val          ``                     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100
+# ifndef MAX_FD
+#  define MAX_FD 1024
 # endif
 
 char	*get_next_line(int fd);

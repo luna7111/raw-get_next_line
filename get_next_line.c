@@ -6,7 +6,7 @@
 /*   By: ldel-val <ldel-val@student.42madrid.c     |  |           *           */
 /*                                                 \  '.___.;       +         */
 /*   Created: 2024/10/17 16:12:55 by ldel-val       '._  _.'   .        .     */
-/*   Updated: 2024/10/24 18:14:17 by ldel-val          ``                     */
+/*   Updated: 2024/11/02 22:48:19 by ldel-val          ``                     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ char	*get_next_line(int fd)
 	if (!buffer)
 		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	read_bytes = 1;
-	if (buffer[ft_find_lbreak(buffer) + 1])
+	if (buffer && buffer[ft_find_lbreak(buffer) + 1])
 		ft_strlcpy(buffer, &buffer[ft_find_lbreak(buffer) + 1], BUFFER_SIZE);
-	else
+	else if (buffer)
 		read_bytes = ft_read(fd, buffer, BUFFER_SIZE);
-	while (read_bytes > 0)
+	while (read_bytes > 0 && buffer)
 	{
 		string = ft_strnappend(string, buffer, ft_find_lbreak(buffer) + 1);
 		if (buffer[ft_find_lbreak(buffer)] == '\n')
@@ -78,13 +78,13 @@ char	*get_next_line(int fd)
 	buffer = NULL;
 	return (string);
 }
-/*
+
 int	main(void)
 {
 	int		fd;
 	char	*line;
 
-	fd = open("test0.txt", O_RDONLY);
+	fd = 0;
 	line = get_next_line(fd);
 	printf("%s", line);
 	while (line)
@@ -94,4 +94,4 @@ int	main(void)
 		printf("%s", line);
 	}
 	free(line);
-}*/
+}

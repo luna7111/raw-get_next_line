@@ -6,7 +6,7 @@
 /*   By: ldel-val <ldel-val@student.42madrid.c     |  |           *           */
 /*                                                 \  '.___.;       +         */
 /*   Created: 2024/10/17 16:12:55 by ldel-val       '._  _.'   .        .     */
-/*   Updated: 2024/11/01 15:15:14 by ldel-val          ``                     */
+/*   Updated: 2024/11/02 23:10:42 by ldel-val          ``                     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,33 @@ ssize_t	ft_read(int fd, char *buffer, size_t count)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer[MAX_FD];
+	static char	*buf[MAX_FD];
 	char		*string;
 	ssize_t		read_bytes;
 
 	string = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!buffer[fd])
-		buffer[fd] = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!buf[fd])
+		buf[fd] = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	read_bytes = 1;
-	if (buffer[fd][ft_find_lbreak(buffer[fd]) + 1])
-		ft_strlcpy(buffer[fd], &buffer[fd][ft_find_lbreak(buffer[fd]) + 1], BUFFER_SIZE);
-	else
-		read_bytes = ft_read(fd, buffer[fd], BUFFER_SIZE);
-	while (read_bytes > 0)
+	if (buf[fd] && buf[fd][ft_find_lbreak(buf[fd]) + 1])
+		ft_strlcpy(buf[fd], &buf[fd][ft_find_lbreak(buf[fd]) + 1], BUFFER_SIZE);
+	else if (buf[fd])
+		read_bytes = ft_read(fd, buf[fd], BUFFER_SIZE);
+	while (read_bytes > 0 && buf[fd])
 	{
-		string = ft_strnappend(string, buffer[fd], ft_find_lbreak(buffer[fd]) + 1);
-		if (buffer[fd][ft_find_lbreak(buffer[fd])] == '\n')
+		string = ft_strnappend(string, buf[fd], ft_find_lbreak(buf[fd]) + 1);
+		if (buf[fd][ft_find_lbreak(buf[fd])] == '\n')
 			return (string);
-		read_bytes = ft_read(fd, buffer[fd], BUFFER_SIZE);
+		read_bytes = ft_read(fd, buf[fd], BUFFER_SIZE);
 	}
-	if (buffer[fd])
-		free(buffer[fd]);
-	buffer[fd] = NULL;
+	if (buf[fd])
+		free(buf[fd]);
+	buf[fd] = NULL;
 	return (string);
 }
-
+/*
 int	main(void)
 {
 	int		fd1;
@@ -99,7 +99,6 @@ int	main(void)
 		free(line);
 		line = get_next_line(fd2);
 		printf("%s", line);
-
 	}
 	free(line);
-}
+}*/

@@ -6,7 +6,7 @@
 /*   By: ldel-val <ldel-val@student.42madrid.c     |  |           *           */
 /*                                                 \  '.___.;       +         */
 /*   Created: 2024/10/17 16:12:55 by ldel-val       '._  _.'   .        .     */
-/*   Updated: 2024/11/02 22:48:19 by ldel-val          ``                     */
+/*   Updated: 2024/11/02 23:10:26 by ldel-val          ``                     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*get_next_line(int fd)
 	buffer = NULL;
 	return (string);
 }
-
+/*
 int	main(void)
 {
 	int		fd;
@@ -94,4 +94,4 @@ int	main(void)
 		printf("%s", line);
 	}
 	free(line);
-}
+}*/
